@@ -1,0 +1,105 @@
+September 17 2021 TakeTwo Community Call
+
+
+Sprint Priorities: 
+1.	TakeTwo Crowdsource Data home (university partners, non profit to own public dataset) 
+2.	API & Browser Extension UI/UX enhancements
+3.	ML Model Development
+  a.	Refactor ML code for scalability
+  b.	Scraping publicly available data sources (ie. social media – ensure user data rights/consent & respecting privacy) 
+  c.	V2 - Training sequential, contextual model
+  d.	V3 - Training an explainable AI model
+
+Discussion Summary: 
+•	Blocker – finding a “home” for the data ie. a partner/neutral entity to own
+•	Current functionality of API & Browser Extension
+•	Moving to MongoDB (Cloudant / Couch DB not supported going forward)
+•	Types of ML Model + Roadmap
+•	Current ML analysis has been using the Kaggle Jigsaw Toxicity Dataset 
+•	Current goal of TakeTwo is NOT to flag content for users while they consume media (though this could be a future goal.
+  o	Vision has been focused on providing a private experience for the contributors and those checking their content for potentially racially biased content
+•	What should the unit of analysis (sentence, paragraph, etc.) be?
+  o	Engage crowdsource contributors at different levels of granularity to classify binary AND categorically 
+•	Work to align API/Browser Ext with ML Models
+•	Potentially doing transfer learning with HateBERT 
+
+
+
+COMMUNITY DECISIONS NEEDED: 
+•	Potential (neutral) partners to host & own public data set curated through TakeTwo
+•	Unit of analysis for data submitted by trusted crowdsource contributors
+•	Granularity for crowdsource contributors to classify data (binary / categorically / both?) 
+•	Process & criteria to accept trusted user group of crowdsource contributors
+•	Anyone against moving to MongoDB (Cloudant / Couch DB not supported going forward)?
+
+
+
+BLOCKERS: 
+•	Identifying a partner to host & own the TakeTwo crowdsourced data 
+
+***************************************************************************************************************************************
+Extended Notes: 
+
+Overview of TakeTwo 
+
+1. API 
+    1. Bugs that we need to fix 
+    2. Need to move from Couch DB / Cloudant —> MongoDB?
+2. Machine Learning Model 
+    1. MVP 1 has been implemented using sckikit learn, SVM, bag of words 
+        1. Preetika has done some work using concrete data
+    2. V2 - Progressing towards more deep learning to do sequential & contextual learning
+        1. Preetika working on LSTM, RNN  - currently standing at about 80% 
+        2. Also want to make sure models (Currently jupyter notebook) can be available in diff models (refactor mode) to be incorporated in reposistory 
+        3. Experimenting around auto encoders 
+        4. Doing all this training using publicly available dataset on kaggle jigsaw but want to move towards crowdsourcing framework
+    3. V3 - Explainable not only classify but point to particular areas responsible for judgement 
+        1. LIME, SHAP
+    4. V4 - Also learn about credibility of markers, learn to learn ie. trustworthiness of the markers 
+3. Browser Extension (Chrome)
+    1. Requires UI/UX enhancements
+
+Going Forward
+
+- Really need to figure out who will be taking ownership, maintaince of the data for data collected via the chrome extension tool (privately collected data) that we would be using to build ML model along with other publicly available relevant datasets
+- Goal to use this data to support the API
+- Looking to partner with universities, charities, non profits
+- Data as a whole should be owned by an organization, neutral party, like a research institute and the data should be open to the public for their own research outside of the project (looking for a home for this data to live) - main obstacle at the moment. looking for a home
+- Moving from a text editor online to a browser extension (a whole piece of work that we haven't even started yet)
+- Welcome design thinking to support the UI/UX components of the solution
+- Paraphrase ML Models Immediate next steps
+    - Refactor ML code for scalability
+    - Scraping social media data (Twitter, instagram) to extract complementary dataset
+    - Training deep learning model, or working on sequential model & explainable model
+
+Questions
+
+- Are the current models simple ML models?
+    - Currently it is a simple ML model. We are looking at more complex models in the next phases.
+- Can this also flag content for those browsing or reading content?
+    - This is not the current or short term goal or intention of TakeTwo. However, we have spoken about this and may consider in the future.
+    - We wanted to design the experience as a private experience and prevent shaming behaviors.
+    - If another wants to take the data to build this, it could be possible.
+- What is the unit of analysis?
+    - Sentence, paragraph, may need to make this explicit in UI
+    - Subtle form of biased expressions can be contextual and multiple sentences / paragraphs
+    - Marker should be able to mark big chunks of text
+    - ML classified, can classify paragraph but need to ensure this is only possible via explainable model (for effectiveness)
+    - These are sentences that are biased / not biased. As someone writes a sentence this sentence is biased but how to change to make it unbiased. Maybe in parallel, if there is a rational provided from the annotator.
+        - Two step classifier?
+        - Currently Kaggle dataset has full blown paragraph and column severity of toxicity 0<x<1
+            - Converted to boolean; < 0 --> considered as a biased sentence
+            - Don't want to restricted by kaggle dataset
+    - Should align solution components API + Chrome Ext. back with the ML portion
+        - Original design around categories and optional text
+        - Should we on chrome ext. side for now match what's happening with the model?
+            - Good for tool to be able to do both. When everything is ready and we are good to go to collect data, we will need to make a decision binary/category but.. until that point we don't necessarily have to go.
+            - General, category data could also be used in the binary sense or reduced to that (binary & then have category as another field too)
+        - Annotations - active learning ; feedback to rephrase people's content
+            - Engage crowdsourcer at different levels of granularity (binary, category, explanation) + up to us later to decide how to
+    - Going forward
+        - V2 ML
+        - Unit of analysis for ML
+    - Have you looked at Hate-BERT?
+        - Team mate looking into something similar
+        - Possible doing some transfer learning
